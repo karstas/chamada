@@ -1,62 +1,62 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
-import { useState } from "react";
-import { Camera, CameraType } from "expo-camera";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Camera } from "expo-camera";
 
 export default function App() {
-  const [type, setType] = useState(CameraType.back);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
 
-  function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
+  function handleOpenCamera() {
+    setIsCameraOpen(true);
   }
 
   return (
-    <>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
-
-      <View style={styles.container}>
-        <Camera style={styles.camera} type={type}>
+    <View style={styles.container}>
+      {isCameraOpen ? (
+        <Camera style={styles.camera} type={Camera.Constants.Type.back}>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-              <Text style={styles.text}>Flip Camera</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setIsCameraOpen(false)}
+            >
+              <Text style={styles.text}>Fechar Câmera</Text>
             </TouchableOpacity>
           </View>
         </Camera>
-      </View>
-    </>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleOpenCamera}>
+            <Text style={styles.text}>Abrir Câmera</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
   camera: {
     flex: 1,
+    width: "100%",
   },
   buttonContainer: {
-    flex: 1,
-    flexDirection: "row",
     backgroundColor: "transparent",
-    margin: 64,
+    margin: 20,
   },
   button: {
-    flex: 1,
-    alignSelf: "flex-end",
+    width: 150,
+    height: 50,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    borderRadius: 10,
+    justifyContent: "center",
     alignItems: "center",
   },
   text: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 18,
     color: "white",
   },
 });
