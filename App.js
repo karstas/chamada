@@ -57,7 +57,7 @@ export default function App() {
               </TouchableOpacity>
             </View>
           )}
-          <MapViewComponent scannedData={scannedData} markers={markers} />
+          <MapViewComponent />
         </>
       )}
       {scannedData && (
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   button: {
     width: 200,
     height: 50,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(255, 99, 71, 0.5)",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -99,13 +99,13 @@ const styles = StyleSheet.create({
     left: 20,
     width: 160,
     height: 40,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(255, 99, 71, 0.5)",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   scannedDataContainer: {
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    backgroundColor: "rgba(255, 99, 71, 0.7)",
     padding: 20,
     marginTop: "auto",
     marginBottom: 20,

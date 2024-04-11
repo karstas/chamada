@@ -1,40 +1,86 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
+import { StyleSheet, Text, View } from "react-native";
+import * as Location from "expo-location";
 
-export default function MapViewComponent({ scannedData, markers }) {
+export default function MapViewComponent() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permissão da localização negada!");
+        return;
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation.coords);
+    })();
+  }, []);
+
+  let mapRegion = {
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  };
+
+  if (location) {
+    mapRegion = {
+      latitude: location.latitude,
+      longitude: location.longitude,
+      latitudeDelta: 0.005,
+      longitudeDelta: 0.005,
+    };
+  }
+
+  let text = "Aguarde...";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = `Latitude: ${location.latitude}, Longitude: ${location.longitude}`;
+  }
+
   return (
     <View style={styles.container}>
       <MapView
-        loadingEnabled={true}
         style={styles.map}
-        initialRegion={{
-          latitude: -22.35995,
-          longitude: -43.59809,
-          latitudeDelta: 0.5,
-          longitudeDelta: 0.5,
+        loadingEnabled={true}
+        region={{
+          latitude: 0,
+          longitude: 0,
+          latitudeDelta: 0,
+          longitudeDelta: 1000,
         }}
+        // style={{
+        //   width: "500px",
+        //   height: "500px",
+        //   minheight: "200px",
+        // }}
       >
-        {markers.map((marker, index) => (
-          <Marker
-            key={index}
-            coordinate={marker.coordinate}
-            title={marker.title}
-            description={marker.description}
-          />
-        ))}
-
-        {scannedData && (
-          <Marker
-            coordinate={{
-              latitude: scannedData.latitude,
-              longitude: scannedData.longitude,
-            }}
-            title="Local do Scanner"
-            description="Local onde o QR Code foi escaneado"
-          />
-        )}
+        {/* <Marker
+          coordinate={
+            !location
+              ? {
+                  latitude: 0,
+                  longitude: 0,
+                  latitudeDelta: 0,
+                  longitudeDelta: 1000,
+                }
+              : {
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                  latitudeDelta: 0.005,
+                  longitudeDelta: 0.005,
+                }
+          }
+          title="Aqui"
+          description="vassouras"
+        /> */}
       </MapView>
+      <Text style={styles.paragraph}>{text}</Text>
     </View>
   );
 }
@@ -49,6 +95,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: "100%",
-    height: "100%",
+    height: "80%",
+
   },
 });
