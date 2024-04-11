@@ -1,67 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
 
 export default function MapViewComponent({ scannedData, markers }) {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permissão da localização negada!");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location.coords);
-    })();
-  }, []);
-
   return (
     <View style={styles.container}>
       <MapView
         loadingEnabled={true}
-        region={
-          !location
-            ? {
-                latitude: 0,
-                longitude: 0,
-                latitudeDelta: 0,
-                longitudeDelta: 1000,
-              }
-            : {
-                latitude: location.latitude,
-                longitude: location.longitude,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005,
-              }
-        }
         style={styles.map}
+        initialRegion={{
+          latitude: -22.35995,
+          longitude: -43.59809,
+          latitudeDelta: 0.5,
+          longitudeDelta: 0.5,
+        }}
       >
-        <Marker
-          coordinate={
-            !location
-              ? {
-                  latitude: 0,
-                  longitude: 0,
-                  latitudeDelta: 0,
-                  longitudeDelta: 1000,
-                }
-              : {
-                  latitude: location.latitude,
-                  longitude: location.longitude,
-                  latitudeDelta: 0.005,
-                  longitudeDelta: 0.005,
-                }
-          }
-          title="Eu estou aqui!"
-          description="Nosso local de aula."
-        />
+        {markers.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={marker.coordinate}
+            title={marker.title}
+            description={marker.description}
+          />
+        ))}
+
+        {scannedData && (
+          <Marker
+            coordinate={{
+              latitude: scannedData.latitude,
+              longitude: scannedData.longitude,
+            }}
+            title="Local do Scanner"
+            description="Local onde o QR Code foi escaneado"
+          />
+        )}
       </MapView>
-      <Text style={styles.paragraph}>{errorMsg}</Text>
     </View>
   );
 }
@@ -69,16 +42,13 @@ export default function MapViewComponent({ scannedData, markers }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
+    height: "100%",
   },
   map: {
     width: "100%",
-    height: "80%",
-  },
-  paragraph: {
-    fontSize: 16,
-    color: "red",
+    height: "100%",
   },
 });
