@@ -21,7 +21,7 @@ export default function QRCodeScanner({ onClose }) {
   if (hasPermission === null) {
     return (
       <View>
-        <Text>Requesting camera permission</Text>
+        <Text>Requisitando permissão de câmera</Text>
       </View>
     );
   }
@@ -29,7 +29,7 @@ export default function QRCodeScanner({ onClose }) {
   if (hasPermission === false) {
     return (
       <View>
-        <Text>No access to camera</Text>
+        <Text>Acesso a câmera negado</Text>
       </View>
     );
   }

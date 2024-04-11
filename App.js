@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import QRCodeScanner from "./components/QRcodeScanner";
 import BiometricAuthentication from "./components/BiometricAuthentication";
+import MapViewComponent from "./components/MapView";
 
 export default function App() {
   const [scannedData, setScannedData] = useState(null);
@@ -17,9 +18,21 @@ export default function App() {
   }
 
   function handleBiometricSuccess() {
-    console.log("Autenticação biométrica bem-sucedida");
     setIsAuthenticated(true);
   }
+
+  const markers = scannedData
+    ? [
+        {
+          coordinate: {
+            latitude: scannedData.latitude,
+            longitude: scannedData.longitude,
+          },
+          title: "Local do Scanner",
+          description: "Local onde o QR Code foi escaneado",
+        },
+      ]
+    : [];
 
   return (
     <View style={styles.container}>
@@ -44,6 +57,7 @@ export default function App() {
               </TouchableOpacity>
             </View>
           )}
+          <MapViewComponent scannedData={scannedData} markers={markers} />
         </>
       )}
       {scannedData && (
