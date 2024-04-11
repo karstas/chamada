@@ -13,10 +13,6 @@ export default function App() {
     setIsScannerOpen(true);
   }
 
-  function handleCloseScanner() {
-    setIsScannerOpen(false);
-  }
-
   function handleFacialSuccess() {
     setIsAuthenticated(true);
   }
@@ -37,10 +33,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       {!isAuthenticated ? (
-        <FacialAuthentication
-          onSuccess={handleFacialSuccess}
-          onCancel={() => {}}
-        />
+        <FacialAuthentication onSuccess={handleFacialSuccess} />
       ) : (
         <>
           <TouchableOpacity style={styles.button} onPress={handleOpenScanner}>
@@ -48,7 +41,7 @@ export default function App() {
           </TouchableOpacity>
           {isScannerOpen && (
             <View style={styles.scannerContainer}>
-              <QRCodeScanner onClose={handleCloseScanner} />
+              <QRCodeScanner onClose={() => setIsScannerOpen(false)} />
               <TouchableOpacity
                 style={styles.scanAgainButton}
                 onPress={() => setScannedData(null)}
