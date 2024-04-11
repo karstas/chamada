@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import QRCodeScanner from "./components/QRcodeScanner";
-import BiometricAuthentication from "./components/BiometricAuthentication";
+import FacialAuthentication from "./components/FacialAuthentication";
 import MapViewComponent from "./components/MapView";
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
     setIsScannerOpen(false);
   }
 
-  function handleBiometricSuccess() {
+  function handleFacialSuccess() {
     setIsAuthenticated(true);
   }
 
@@ -37,8 +37,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       {!isAuthenticated ? (
-        <BiometricAuthentication
-          onSuccess={handleBiometricSuccess}
+        <FacialAuthentication
+          onSuccess={handleFacialSuccess}
           onCancel={() => {}}
         />
       ) : (
