@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import QRCodeScanner from "./components/QRcodeScanner";
-import FacialAuthentication from "./components/FacialAuthentication";
+import BiometricAuthentication from "./components/BiometricAuthentication";
 import MapViewComponent from "./components/MapView";
 
 export default function App() {
@@ -13,7 +13,11 @@ export default function App() {
     setIsScannerOpen(true);
   }
 
-  function handleFacialSuccess() {
+  function handleCloseScanner() {
+    setIsScannerOpen(false);
+  }
+
+  function handleBiometricSuccess() {
     setIsAuthenticated(true);
   }
 
@@ -33,7 +37,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       {!isAuthenticated ? (
-        <FacialAuthentication onSuccess={handleFacialSuccess} />
+        <BiometricAuthentication
+          onSuccess={handleBiometricSuccess}
+          onCancel={() => {}}
+        />
       ) : (
         <>
           <TouchableOpacity style={styles.button} onPress={handleOpenScanner}>
@@ -41,7 +48,7 @@ export default function App() {
           </TouchableOpacity>
           {isScannerOpen && (
             <View style={styles.scannerContainer}>
-              <QRCodeScanner onClose={() => setIsScannerOpen(false)} />
+              <QRCodeScanner onClose={handleCloseScanner} />
               <TouchableOpacity
                 style={styles.scanAgainButton}
                 onPress={() => setScannedData(null)}
