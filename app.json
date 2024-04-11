@@ -4,21 +4,21 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow camera to access your camera",
-          "microphonePermission": "Allow camera to access your microphone",
+          "cameraPermission": "Permitir acesso a sua câmera",
+          "microphonePermission": "Permitir acesso a seu microfone",
           "recordAudioAndroid": true
         }
         
       ]
     ],
-    "name": "chamada",
+    "name": "App",
     "slug": "chamada",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -30,7 +30,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon-logo.png",
         "backgroundColor": "#ffffff"
       }
     },
