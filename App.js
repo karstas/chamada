@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacityProps } from "react-native";
 import QRCodeScanner from "./components/QRcodeScanner";
 import FacialAuthentication from "./components/FacialAuthentication";
 import MapViewComponent from "./components/MapView";
