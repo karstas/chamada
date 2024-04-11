@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   button: {
     width: 200,
     height: 50,
-    backgroundColor: "rgb(255, 255, 255)",
+    backgroundColor: "rgb(255, 99, 71)", // Vermelho Claro
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    backgroundColor: "rgb(0, 0, 0, 0.5)",
+    color: "white",
   },
 });
