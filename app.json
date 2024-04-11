@@ -8,6 +8,7 @@
           "microphonePermission": "Allow camera to access your microphone",
           "recordAudioAndroid": true
         }
+        
       ]
     ],
     "name": "chamada",

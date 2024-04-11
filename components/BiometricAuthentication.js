@@ -9,9 +9,7 @@ export default function BiometricAuthentication({ onSuccess, onCancel }) {
       await LocalAuthentication.supportedAuthenticationTypesAsync();
 
     if (hasBiometric && supportedTypes.length > 0) {
-      const result = await LocalAuthentication.authenticateAsync({
-        promptMessage: "Toque no sensor para autenticar",
-      });
+      const result = await LocalAuthentication.authenticateAsync({});
 
       if (result.success) {
         onSuccess();
@@ -19,7 +17,7 @@ export default function BiometricAuthentication({ onSuccess, onCancel }) {
         console.log("Falha na autenticação biométrica");
       }
     } else {
-      console.log("Autenticação biométrica não suportada ou não configurada");
+      console.log("Ocorreu um erro");
     }
   };
 
